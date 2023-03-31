@@ -1,14 +1,14 @@
 export interface RegisterUserResponse {
-  name: string;
+  username: string;
   email: string;
-  id: string;
+  userId: string;
 }
 
 export type User = {
-  id: string;
-  name: string;
+  userId: string;
+  username: string;
   email: string;
   contactNumber: string;
   password: string;
   role?: string;
-}
+};

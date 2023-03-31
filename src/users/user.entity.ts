@@ -11,10 +11,10 @@ import { RegisterUserResponse } from './interfaces/user.interface';
 @Unique(['email'])
 export class User extends BaseEntity implements RegisterUserResponse {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  userId: string;
 
   @Column({ length: 255 })
-  name: string;
+  username: string;
 
   @Column({ length: 20 })
   contactNumber: string;
@@ -33,4 +33,10 @@ export class User extends BaseEntity implements RegisterUserResponse {
 
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
+
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
+
+  @Column({ default: '', length: 255 })
+  refreshToken: string;
 }

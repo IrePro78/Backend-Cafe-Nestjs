@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -13,8 +13,8 @@ import { AuthModule } from './auth/auth.module';
     TypeOrmModule.forRootAsync({
       useClass: DatabaseConfiguration,
     }),
-    UsersModule,
-    AuthModule,
+    forwardRef(() => UsersModule),
+    forwardRef(() => AuthModule),
   ],
 
   controllers: [AppController],

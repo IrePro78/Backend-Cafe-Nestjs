@@ -3,7 +3,7 @@ import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
-  async getOneUser(email: string): Promise<User> {
-    return await User.findOneByOrFail({ email });
+  async getOneUser(userId: string): Promise<User> {
+    return await User.findOneByOrFail({ userId });
   }
 }

@@ -1,8 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { RegisterUserDto } from './dto';
+import { LoginUserDto, RegisterUserDto } from './dto';
 import { User } from '../users/user.entity';
 import { Tokens } from './types';
 
@@ -59,12 +59,22 @@ export class AuthService {
     return { access_token: at, refresh_token: rt };
   }
 
-  async login(email: string, pass: string): Promise<any> {
-    const user = await this.userService.getOneUser(email);
+  async login(login: LoginUserDto): Promise<Tokens> {
+    const user = await this.userService.getOneUserByEmail(login.email);
 
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
-    }
-    return user;
+    if (!user) throw new ForbiddenException('Access Denied');
+
+    const passwordMatches = bcrypt.compare(login.password, user.password);
+
+    if (!passwordMatches) throw new ForbiddenException('Access Denied');
+
+    const tokens = await this.getTokens(user.userId, user.email);
+    await this.updateRtHash(user.userId, tokens.refresh_token);
+    return tokens;
+  }
+
+  async logout(userId: string) {
+    const user = await this.userService.getOneUser(userId);
+    user.refreshToken = null;
   }
 }

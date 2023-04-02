@@ -6,4 +6,8 @@ export class UsersService {
   async getOneUser(userId: string): Promise<User> {
     return await User.findOneByOrFail({ userId });
   }
+
+  async getOneUserByEmail(email: string): Promise<User> {
+    return await User.findOneByOrFail({ email });
+  }
 }

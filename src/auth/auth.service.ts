@@ -1,15 +1,15 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
+import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDto, RegisterUserDto } from './dto';
-import { User } from '../users/user.entity';
+import { User } from '../user/user.entity';
 import { Tokens } from './types';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UsersService,
+    private userService: UserService,
     private jwtService: JwtService,
   ) {}
 
@@ -44,7 +44,7 @@ export class AuthService {
       this.jwtService.signAsync(
         { userId, email },
         {
-          secret: 'at-secret',
+          secret: 'guards-secret',
           expiresIn: 60 * 15,
         },
       ),
@@ -64,7 +64,7 @@ export class AuthService {
 
     if (!user) throw new ForbiddenException('Access Denied');
 
-    const passwordMatches = bcrypt.compare(login.password, user.password);
+    const passwordMatches = await bcrypt.compare(login.password, user.password);
 
     if (!passwordMatches) throw new ForbiddenException('Access Denied');
 
@@ -75,6 +75,21 @@ export class AuthService {
 
   async logout(userId: string) {
     const user = await this.userService.getOneUser(userId);
+    if (!user) throw new ForbiddenException('Access Denied');
     user.refreshToken = null;
+    await user.save();
+  }
+
+  async refreshTokens(userId: string, rt: string) {
+    const user = await this.userService.getOneUser(userId);
+    if (!user || !user.refreshToken)
+      throw new ForbiddenException('Access Denied');
+
+    const rtMatches = await bcrypt.compare(rt, user.refreshToken);
+    if (!rtMatches) throw new ForbiddenException('Access Denied');
+
+    const tokens = await this.getTokens(user.userId, user.email);
+    await this.updateRtHash(user.userId, tokens.refresh_token);
+    return tokens;
   }
 }

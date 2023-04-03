@@ -37,6 +37,6 @@ export class User extends BaseEntity implements RegisterUserResponse {
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
-  @Column({ default: '', length: 255 })
+  @Column({ default: '', length: 255, nullable: true })
   refreshToken: string;
 }

@@ -2,10 +2,14 @@ import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfiguration } from '../config/db.configuration';
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AtGuard } from './common/guards';
+import { CategoryModule } from './category/category.module';
+import { ProductsModule } from './product/products.module';
 
 @Module({
   imports: [
@@ -13,11 +17,13 @@ import { AuthModule } from './auth/auth.module';
     TypeOrmModule.forRootAsync({
       useClass: DatabaseConfiguration,
     }),
-    forwardRef(() => UsersModule),
+    forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
+    CategoryModule,
+    ProductsModule,
   ],
 
   controllers: [AppController],
-  providers: [AppService],
+  providers: [{ provide: APP_GUARD, useClass: AtGuard }, AppService],
 })
 export class AppModule {}

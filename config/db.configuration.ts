@@ -2,6 +2,8 @@ import * as process from 'process';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { User } from '../src/user/user.entity';
+import { Category } from '../src/category/category.entity';
+import { Product } from '../src/product/product.entity';
 
 export class DatabaseConfiguration implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions | Promise<TypeOrmModuleOptions> {
@@ -13,7 +15,7 @@ export class DatabaseConfiguration implements TypeOrmOptionsFactory {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       // entities: [process.env.TYPEORM_ENTITIES],
-      entities: [User],
+      entities: [User, Category, Product],
       autoLoadEntities: true,
       bigNumberStrings: false,
       logging: true,

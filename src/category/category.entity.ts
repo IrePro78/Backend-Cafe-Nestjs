@@ -1,8 +1,8 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { CategoryResponse } from './interfaces/category.interface';
+import { AddCategoryResponse } from './types';
 
 @Entity()
-export class Category extends BaseEntity implements CategoryResponse {
+export class Category extends BaseEntity implements AddCategoryResponse {
   @PrimaryGeneratedColumn('uuid')
   categoryId: string;
 

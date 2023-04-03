@@ -20,12 +20,13 @@ export class AuthController {
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() user: RegisterUserDto): Promise<Tokens> {
-    return await this.authService.register(user);
+    return this.authService.register(user);
   }
+
   @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  login(@Body() login: LoginUserDto): Promise<Tokens> {
+  async login(@Body() login: LoginUserDto): Promise<Tokens> {
     return this.authService.login(login);
   }
 

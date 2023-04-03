@@ -19,8 +19,8 @@ import { ProductsModule } from './product/products.module';
     }),
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
-    CategoryModule,
-    ProductsModule,
+    forwardRef(() => CategoryModule),
+    forwardRef(() => ProductsModule),
   ],
 
   controllers: [AppController],

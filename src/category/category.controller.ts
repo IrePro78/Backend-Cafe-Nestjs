@@ -12,11 +12,11 @@ import { AddCategoryDto } from './dto';
 import {
   AddCategoryResponse,
   GetListCategoriesResponse,
-  GetOneCategoryResponse,
+  UpdateCategoryResponse,
 } from './types';
 import { Public } from '../common/decorators';
-import { GetCategory } from '../common/decorators';
-import { GetCategoryId } from '../common/decorators';
+import { GetCategory } from '../common/decorators/get-category.decorator';
+import { GetCategoryId } from '../common/decorators/get-category-id.decorator';
 
 @Controller('category')
 export class CategoryController {
@@ -36,13 +36,13 @@ export class CategoryController {
     return this.categoryService.get();
   }
 
-  @Public()
+  // @Public()
   @Patch('update')
   @HttpCode(HttpStatus.OK)
   updateCategory(
-    @GetCategoryId() categoryId: string,
-    @GetCategory('name') categoryName: string,
-  ): Promise<GetOneCategoryResponse> {
-    return this.categoryService.update(categoryId, categoryName);
+    @GetCategory('name') name: string,
+    @GetCategoryId('categoryId') categoryId: string,
+  ): Promise<UpdateCategoryResponse> {
+    return this.categoryService.update(categoryId, name);
   }
 }

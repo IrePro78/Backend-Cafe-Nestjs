@@ -8,3 +8,5 @@ export type AddCategoryResponse = Category;
 export type GetListCategoriesResponse = Category[];
 
 export type GetOneCategoryResponse = Category;
+
+export type UpdateCategoryResponse = Category;

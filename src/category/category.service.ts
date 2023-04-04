@@ -15,7 +15,7 @@ export class CategoryService {
   }
 
   async get(): Promise<GetListCategoriesResponse> {
-    return await Category.find();
+    return await Category.find({ relations: ['products'] });
   }
 
   async update(
@@ -24,7 +24,6 @@ export class CategoryService {
   ): Promise<GetOneCategoryResponse> {
     const category = await Category.findOne({ where: { categoryId } });
     category.name = categoryName;
-    console.log(category);
     await category.save();
     return category;
   }

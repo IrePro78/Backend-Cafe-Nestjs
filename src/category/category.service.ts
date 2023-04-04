@@ -18,6 +18,10 @@ export class CategoryService {
     return await Category.find({ relations: ['products'] });
   }
 
+  async getOneCategory(categoryId: string): Promise<GetOneCategoryResponse> {
+    return await Category.findOne({ where: { categoryId } });
+  }
+
   async update(
     categoryId: string,
     categoryName: string,

@@ -1,16 +1,17 @@
-export type ProductType = {
+export type Product = {
   productId: string;
   name: string;
   description: string;
   price: number;
-  status: string;
-  categoryId: string;
+  status: boolean;
 };
 
-export type AddProductResponse = ProductType;
+export type AddProductResponse = Product;
 
-export type GetListProductsResponse = ProductType[];
+export type GetListProductsResponse = Product[];
 
-export type GetOneProductResponse = ProductType;
+export type GetOneProductResponse = Product;
 
-export type UpdateProductResponse = ProductType;
+export type UpdateProductResponse = Product;
+
+export type RemoveProductResponse = 'Product Deleted Successfully';

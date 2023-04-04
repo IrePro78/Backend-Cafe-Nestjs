@@ -25,7 +25,7 @@ export class CategoryController {
   @Public()
   @Post('add')
   @HttpCode(HttpStatus.CREATED)
-  add(@Body() category: AddCategoryDto): Promise<AddCategoryResponse> {
+  addCategory(@Body() category: AddCategoryDto): Promise<AddCategoryResponse> {
     return this.categoryService.add(category);
   }
 

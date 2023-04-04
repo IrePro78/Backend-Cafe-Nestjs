@@ -9,7 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './common/guards';
 import { CategoryModule } from './category/category.module';
-import { ProductsModule } from './product/products.module';
+import { ProductModule } from './product/product.module';
+import { BillModule } from './bill/bill.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { ProductsModule } from './product/products.module';
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
     forwardRef(() => CategoryModule),
-    forwardRef(() => ProductsModule),
+    forwardRef(() => ProductModule),
+    BillModule,
   ],
 
   controllers: [AppController],

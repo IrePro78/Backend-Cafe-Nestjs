@@ -13,7 +13,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  hashData(data: string) {
+  async hashData(data: string): Promise<string> {
     return bcrypt.hash(data, 10);
   }
 
@@ -33,7 +33,7 @@ export class AuthService {
     return tokens;
   }
 
-  async updateRtHash(userId: string, rt: string) {
+  async updateRtHash(userId: string, rt: string): Promise<void> {
     const user = await this.userService.getOneUser(userId);
     user.refreshToken = await this.hashData(rt);
     await user.save();

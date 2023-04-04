@@ -12,19 +12,28 @@ import { GetOneCategoryResponse } from '../category/types';
 @Entity()
 export class Product extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  productId: string;
+  billId: string;
 
   @Column({ length: 255 })
   name: string;
 
-  @Column({ length: 255, default: '' })
-  description: string;
+  @Column({ length: 50 })
+  email: string;
+
+  @Column({ length: 20 })
+  contactNumber: string;
+
+  @Column({ length: 50 })
+  paymentMethod: string;
 
   @Column({ type: 'float', precision: 7, scale: 2, default: 0 })
-  price: number;
+  total: number;
 
-  @Column({ default: false })
-  status: boolean;
+  @Column({ type: 'simple-json', default: null })
+  productDetails: string;
+
+  @Column({ length: 255 })
+  createBy: string;
 
   @ManyToOne((type) => Category, (category) => category.products)
   @JoinColumn()

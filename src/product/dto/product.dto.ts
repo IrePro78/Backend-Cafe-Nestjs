@@ -6,7 +6,7 @@ export class AddProductDto {
   name: string;
   description?: string;
   price?: number;
-  status?: string;
+  status?: boolean;
   categoryId?: string;
 }
 
@@ -14,6 +14,10 @@ export class UpdateProductDto {
   name?: string;
   description?: string;
   price?: number;
-  status?: string;
+  status?: boolean;
   categoryId?: string;
+}
+
+export class UpdateStatusOfProductDto {
+  status: string;
 }

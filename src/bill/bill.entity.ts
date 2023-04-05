@@ -1,16 +1,7 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Category } from '../category/category.entity';
-import { GetOneCategoryResponse } from '../category/types';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Product extends BaseEntity {
+export class Bill extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   billId: string;
 
@@ -27,15 +18,15 @@ export class Product extends BaseEntity {
   paymentMethod: string;
 
   @Column({ type: 'float', precision: 7, scale: 2, default: 0 })
-  total: number;
+  totalAmount: number;
 
-  @Column({ type: 'simple-json', default: null })
+  @Column({ type: 'json', default: null })
   productDetails: string;
 
-  @Column({ length: 255 })
+  @Column({ length: 255, default: '' })
   createBy: string;
 
-  @ManyToOne((type) => Category, (category) => category.products)
-  @JoinColumn()
-  category: GetOneCategoryResponse;
+  // @ManyToOne((type) => Category, (category) => category.products)
+  // @JoinColumn()
+  // category: GetOneCategoryResponse;
 }

@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.setBaseViewsDir(join(__dirname, '..', 'report'));
-  app.setViewEngine('hbs');
+  app.setViewEngine('ejs');
   await app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000);
 }
 

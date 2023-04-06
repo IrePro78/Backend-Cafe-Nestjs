@@ -19,10 +19,10 @@ import { BillModule } from './bill/bill.module';
       useClass: DatabaseConfiguration,
     }),
     forwardRef(() => UserModule),
+    forwardRef(() => BillModule),
     forwardRef(() => AuthModule),
     forwardRef(() => CategoryModule),
     forwardRef(() => ProductModule),
-    BillModule,
   ],
 
   controllers: [AppController],

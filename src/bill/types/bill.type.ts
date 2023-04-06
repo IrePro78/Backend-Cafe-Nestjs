@@ -4,5 +4,7 @@ export type AddOrderDetailsResponse = {
   contactNumber: string;
   paymentMethod: string;
   totalAmount: number;
-  productDetails: string;
+  productDetails: any;
 };
+
+export type GetReportPdfResponse = AddOrderDetailsResponse;

@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { AddOrderDetailsDto } from './dto';
-import { AddOrderDetailsResponse, GetReportPdfResponse } from './types';
+import { GetBillsResponse, GetReportPdfResponse } from './types';
 import { Bill } from './bill.entity';
 import * as path from 'path';
 import * as ejs from 'ejs';
@@ -9,9 +9,7 @@ import * as pdf from 'html-pdf';
 
 @Injectable()
 export class BillService {
-  async addBill(
-    orderDetails: AddOrderDetailsDto,
-  ): Promise<AddOrderDetailsResponse> {
+  async addBill(orderDetails: AddOrderDetailsDto): Promise<Bill> {
     const {
       name,
       email,
@@ -33,31 +31,40 @@ export class BillService {
     return bill;
   }
 
-  async generatePDFToFile(bill): Promise<string> {
+  async generatePDFToFile(bill): Promise<GetReportPdfResponse> {
     const template = await ejs.renderFile(
       path.join(__dirname, '../..', 'report/report.ejs'),
       bill,
     );
-    console.log({ bill });
-    return pdf
+    pdf
       .create(template)
       .toFile(`./report/${bill.billId}.pdf`, function (err, res) {
-        return res.json;
+        return res.filename;
       });
+    return bill;
   }
 
-  async getReportPdf(billId: string, res): Promise<AddOrderDetailsResponse> {
+  async getReportPdf(billId: string, res): Promise<string> {
     const pathPdfFile = `./report/${billId}.pdf`;
-    const pdf = await Bill.findOne({ where: { billId } });
-    console.log({ pdf });
     if (existsSync(pathPdfFile)) {
       res.contentType('application/pdf');
       createReadStream(pathPdfFile).pipe(res);
-    } else {
-      await this.generatePDFToFile(pdf);
-      // res.contentType('application/pdf');
-      createReadStream(pathPdfFile).pipe(res);
     }
-    return res.body;
+    const pdf = await Bill.findOne({ where: { billId } });
+    await this.generatePDFToFile(pdf);
+    if (!existsSync(pathPdfFile)) {
+      setTimeout(() => createReadStream(pathPdfFile).pipe(res), 2000);
+    }
+    return billId;
+  }
+
+  async getBills(): Promise<GetBillsResponse> {
+    return await Bill.find();
+  }
+
+  async removeBill(billId: string): Promise<Bill> {
+    const bill = await Bill.findOne({ where: { billId } });
+    if (!bill) throw new ForbiddenException('This Bill Does Not Exist');
+    return await bill.remove();
   }
 }

@@ -8,6 +8,7 @@ import { Bill } from '../src/bill/bill.entity';
 
 export class DatabaseConfiguration implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions | Promise<TypeOrmModuleOptions> {
+    console.log(process.env.TYPEORM_ENTITIES);
     return {
       type: 'mysql',
       host: process.env.DB_HOST,
@@ -20,7 +21,7 @@ export class DatabaseConfiguration implements TypeOrmOptionsFactory {
       autoLoadEntities: true,
       bigNumberStrings: false,
       logging: true,
-      synchronize: true,
+      synchronize: false,
       migrations: [process.env.TYPEORM_MIGRATIONS],
       namingStrategy: new SnakeNamingStrategy(),
     };

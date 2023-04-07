@@ -14,4 +14,4 @@ export type GetOneProductResponse = Product;
 
 export type UpdateProductResponse = Product;
 
-export type RemoveProductResponse = 'Product Deleted Successfully';
+export type RemoveProductResponse = Product;

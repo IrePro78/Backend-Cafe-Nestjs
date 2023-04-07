@@ -15,6 +15,7 @@ import {
   AddProductResponse,
   GetListProductsResponse,
   GetOneProductResponse,
+  RemoveProductResponse,
   UpdateProductResponse,
 } from './types';
 import {
@@ -88,7 +89,7 @@ export class ProductController {
   @HttpCode(HttpStatus.OK)
   removeProduct(
     @Param('id') productId: string,
-  ): Promise<UpdateProductResponse> {
+  ): Promise<RemoveProductResponse> {
     return this.productService.remove(productId);
   }
 }

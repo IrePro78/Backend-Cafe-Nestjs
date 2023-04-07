@@ -1,4 +1,4 @@
-export type AddOrderDetailsResponse = {
+export type Bill = {
   name: string;
   email: string;
   contactNumber: string;
@@ -7,4 +7,10 @@ export type AddOrderDetailsResponse = {
   productDetails: any;
 };
 
-export type GetReportPdfResponse = AddOrderDetailsResponse;
+export type AddReportPdfResponse = Bill;
+
+export type GetReportPdfResponse = Bill;
+
+export type GetBillsResponse = Bill[];
+
+export type RemoveBillResponse = Bill;

@@ -46,11 +46,4 @@ export class AuthController {
   ) {
     return this.authService.refreshTokens(userId, refreshToken);
   }
-
-  // @UseGuards(AuthGuard)
-  // @HttpCode(HttpStatus.OK)
-  // @Get('profile')
-  // getProfile(@Request() req) {
-  //   return req.user;
-  // }
 }

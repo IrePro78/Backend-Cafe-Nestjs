@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Header,
   HttpCode,
   HttpStatus,
   Param,
@@ -17,7 +16,7 @@ import {
   AddReportPdfResponse,
   GetBillsResponse,
   RemoveBillResponse,
-} from './types';
+} from 'types';
 import { GetOrderId } from '../common/decorators/get-order-id.decorator';
 
 @Controller('bill')

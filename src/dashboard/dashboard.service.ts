@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { GetDetailsResponse } from './types';
+import { GetDetailsResponse } from '../../types/dashboard';
 import { Category } from '../category/category.entity';
 import { Product } from '../product/product.entity';
 import { Bill } from '../bill/bill.entity';

@@ -9,7 +9,7 @@ import {
   AddProductResponse,
   GetListProductsResponse,
   GetOneProductResponse,
-} from './types';
+} from 'types';
 import { Product } from './product.entity';
 import { CategoryService } from '../category/category.service';
 

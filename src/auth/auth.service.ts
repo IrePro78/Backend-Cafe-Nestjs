@@ -1,10 +1,15 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDto, RegisterUserDto } from './dto';
 import { User } from '../user/user.entity';
-import { Tokens } from './types';
+import { Tokens } from 'types';
 
 @Injectable()
 export class AuthService {
@@ -24,11 +29,14 @@ export class AuthService {
     user.email = newUser.email;
     user.contactNumber = newUser.contactNumber;
     user.password = await this.hashData(newUser.password);
-    user.role = newUser.role;
+    // user.role = newUser.role;
+
+    const checkUser = await this.userService.getOneUserByEmail(newUser.email);
+    if (checkUser) throw new ConflictException('Email already exist !');
 
     await user.save();
 
-    const tokens = await this.getTokens(user.userId, user.email);
+    const tokens = await this.getTokens(user.userId, user.email, user.role);
     await this.updateRtHash(user.userId, tokens.refresh_token);
     return tokens;
   }
@@ -39,17 +47,21 @@ export class AuthService {
     await user.save();
   }
 
-  async getTokens(userId: string, email: string): Promise<Tokens> {
+  async getTokens(
+    userId: string,
+    email: string,
+    role: string,
+  ): Promise<Tokens> {
     const [at, rt] = await Promise.all([
       this.jwtService.signAsync(
-        { userId, email },
+        { userId, email, role },
         {
           secret: 'guards-secret',
           expiresIn: 60 * 15,
         },
       ),
       this.jwtService.signAsync(
-        { userId, email },
+        { userId, email, role },
         {
           secret: 'rt-secret',
           expiresIn: 60 * 60 * 24 * 7,
@@ -62,13 +74,13 @@ export class AuthService {
   async login(login: LoginUserDto): Promise<Tokens> {
     const user = await this.userService.getOneUserByEmail(login.email);
 
-    if (!user) throw new ForbiddenException('Access Denied');
+    if (!user) throw new UnauthorizedException('Access Denied');
 
     const passwordMatches = await bcrypt.compare(login.password, user.password);
 
-    if (!passwordMatches) throw new ForbiddenException('Access Denied');
+    if (!passwordMatches) throw new UnauthorizedException('Access Denied');
 
-    const tokens = await this.getTokens(user.userId, user.email);
+    const tokens = await this.getTokens(user.userId, user.email, user.role);
     await this.updateRtHash(user.userId, tokens.refresh_token);
     return tokens;
   }
@@ -88,7 +100,7 @@ export class AuthService {
     const rtMatches = await bcrypt.compare(rt, user.refreshToken);
     if (!rtMatches) throw new ForbiddenException('Access Denied');
 
-    const tokens = await this.getTokens(user.userId, user.email);
+    const tokens = await this.getTokens(user.userId, user.email, user.role);
     await this.updateRtHash(user.userId, tokens.refresh_token);
     return tokens;
   }

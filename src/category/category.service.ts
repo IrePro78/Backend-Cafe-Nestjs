@@ -3,7 +3,7 @@ import {
   AddCategoryResponse,
   GetListCategoriesResponse,
   GetOneCategoryResponse,
-} from './types';
+} from '../../types/category';
 import { AddCategoryDto } from './dto';
 
 export class CategoryService {

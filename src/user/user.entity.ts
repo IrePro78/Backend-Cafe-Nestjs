@@ -5,11 +5,10 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { RegisterUserResponse } from './interfaces/user.interface';
 
 @Entity()
 @Unique(['email'])
-export class User extends BaseEntity implements RegisterUserResponse {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   userId: string;
 

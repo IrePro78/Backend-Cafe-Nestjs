@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { AddOrderDetailsDto } from './dto';
-import { GetBillsResponse, GetReportPdfResponse } from './types';
+import { GetBillsResponse, GetReportPdfResponse } from '../../types/bill';
 import { Bill } from './bill.entity';
 import * as path from 'path';
 import * as ejs from 'ejs';

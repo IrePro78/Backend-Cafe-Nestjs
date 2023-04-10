@@ -1,7 +1,7 @@
 import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { Public } from '../common/decorators';
-import { GetDetailsResponse } from './types';
+import { GetDetailsResponse } from '../../types/dashboard';
 
 @Controller('dashboard')
 export class DashboardController {

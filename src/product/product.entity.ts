@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Category } from '../category/category.entity';
-import { GetOneCategoryResponse } from '../category/types';
+import { GetOneCategoryResponse } from '../../types/category';
 
 @Entity()
 export class Product extends BaseEntity {

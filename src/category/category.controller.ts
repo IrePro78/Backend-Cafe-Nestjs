@@ -13,7 +13,7 @@ import {
   AddCategoryResponse,
   GetListCategoriesResponse,
   UpdateCategoryResponse,
-} from './types';
+} from '../../types/category';
 import { Public } from '../common/decorators';
 import { GetCategory } from '../common/decorators/get-category.decorator';
 import { GetCategoryId } from '../common/decorators/get-category-id.decorator';

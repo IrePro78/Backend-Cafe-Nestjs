@@ -10,6 +10,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.setBaseViewsDir(join(__dirname, '..', 'report'));
   app.setViewEngine('ejs');
+  app.enableCors({
+    allowedHeaders: ['content-type'],
+    origin: ['http://localhost:8000'],
+    credentials: true,
+  });
   await app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000);
 }
 

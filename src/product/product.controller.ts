@@ -17,7 +17,7 @@ import {
   GetOneProductResponse,
   RemoveProductResponse,
   UpdateProductResponse,
-} from './types';
+} from '../../types';
 import {
   AddProductDto,
   UpdateProductDto,

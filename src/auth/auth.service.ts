@@ -57,7 +57,7 @@ export class AuthService {
         { userId, email, role },
         {
           secret: 'guards-secret',
-          expiresIn: 15,
+          expiresIn: 45,
         },
       ),
       this.jwtService.signAsync(
@@ -74,11 +74,11 @@ export class AuthService {
   async login(login: LoginUserDto): Promise<Tokens> {
     const user = await this.userService.getOneUserByEmail(login.email);
 
-    if (!user) throw new UnauthorizedException('Access Denied');
+    if (!user) throw new ForbiddenException('Access Denied');
 
     const passwordMatches = await bcrypt.compare(login.password, user.password);
 
-    if (!passwordMatches) throw new UnauthorizedException('Access Denied');
+    if (!passwordMatches) throw new ForbiddenException('Access Denied');
 
     const tokens = await this.getTokens(user.userId, user.email, user.role);
     await this.updateRtHash(user.userId, tokens.refresh_token);
@@ -92,8 +92,9 @@ export class AuthService {
     await user.save();
   }
 
-  async refreshTokens(userId: string, rt: string) {
-    const user = await this.userService.getOneUser(userId);
+  async refreshTokens(rt: string) {
+    const user = await this.userService.getOneUserByToken(rt);
+    console.log(user);
     if (!user || !user.refreshToken)
       throw new ForbiddenException('Access Denied');
 
@@ -102,6 +103,7 @@ export class AuthService {
 
     const tokens = await this.getTokens(user.userId, user.email, user.role);
     await this.updateRtHash(user.userId, tokens.refresh_token);
+    console.log(tokens);
     return tokens;
   }
 }

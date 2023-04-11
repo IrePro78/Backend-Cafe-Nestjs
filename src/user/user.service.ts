@@ -15,4 +15,9 @@ export class UserService {
   async getOneUserByEmail(email: string): Promise<User> {
     return await User.findOneBy({ email });
   }
+
+  async getOneUserByToken(refreshToken: string): Promise<User> {
+    console.log(refreshToken);
+    return await User.findOneBy({ refreshToken });
+  }
 }

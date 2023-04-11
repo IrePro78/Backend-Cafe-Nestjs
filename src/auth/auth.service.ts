@@ -57,7 +57,7 @@ export class AuthService {
         { userId, email, role },
         {
           secret: 'guards-secret',
-          expiresIn: 60 * 15,
+          expiresIn: 15,
         },
       ),
       this.jwtService.signAsync(
@@ -68,7 +68,7 @@ export class AuthService {
         },
       ),
     ]);
-    return { access_token: at, refresh_token: rt };
+    return { role, access_token: at, refresh_token: rt };
   }
 
   async login(login: LoginUserDto): Promise<Tokens> {

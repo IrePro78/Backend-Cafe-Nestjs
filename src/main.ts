@@ -11,7 +11,6 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'report'));
   app.setViewEngine('ejs');
   app.enableCors({
-    allowedHeaders: ['content-type'],
     origin: ['http://localhost:8000'],
     credentials: true,
   });

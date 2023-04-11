@@ -6,11 +6,10 @@ import {
   HttpStatus,
   Inject,
   Param,
-  Post,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Public } from '../common/decorators';
-import { GetListUsersResponse, GetOneUserResponse, User } from 'types';
+import { GetListUsersResponse, GetOneUserResponse } from 'types';
 
 @Controller('user')
 export class UserController {
@@ -19,7 +18,7 @@ export class UserController {
     private userService: UserService,
   ) {}
 
-  @Public()
+  // @Public()
   @Get('getUsers')
   @HttpCode(HttpStatus.OK)
   getUsers(): Promise<GetListUsersResponse> {
@@ -29,7 +28,7 @@ export class UserController {
   @Public()
   @Get('getOneUser/:id')
   @HttpCode(HttpStatus.OK)
-  getOneUser(@Param('id') userId): Promise<User> {
+  getOneUser(@Param('id') userId): Promise<GetOneUserResponse> {
     return this.userService.getOneUser(userId);
   }
 }

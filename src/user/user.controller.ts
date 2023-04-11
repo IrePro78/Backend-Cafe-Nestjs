@@ -25,7 +25,7 @@ export class UserController {
     return this.userService.getUsers();
   }
 
-  // @Public()
+  @Public()
   @Get('getOneUser/:id')
   @HttpCode(HttpStatus.OK)
   getOneUser(@Param('id') userId): Promise<GetOneUserResponse> {

@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  HostParam,
   HttpCode,
   HttpStatus,
   Post,
@@ -11,7 +10,7 @@ import { AuthService } from './auth.service';
 import { LoginUserDto, RegisterUserDto } from './dto';
 import { Tokens } from 'types';
 import { RtGuard } from '../common/guards';
-import { GetTokenUser, GetCurrentUserId, Public } from '../common/decorators';
+import { GetCurrentUser, GetCurrentUserId, Public } from '../common/decorators';
 
 @Controller('auth')
 export class AuthController {
@@ -41,8 +40,10 @@ export class AuthController {
   @UseGuards(RtGuard)
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  refreshTokens(@HostParam('refreshToken') refreshToken: string) {
-    console.log(refreshToken);
-    return this.authService.refreshTokens(refreshToken);
+  refreshTokens(
+    @GetCurrentUserId() userId: string,
+    @GetCurrentUser('refreshToken') refreshToken: string,
+  ) {
+    return this.authService.refreshTokens(userId, refreshToken);
   }
 }

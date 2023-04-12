@@ -57,7 +57,7 @@ export class AuthService {
         { userId, email, role },
         {
           secret: 'guards-secret',
-          expiresIn: 25,
+          expiresIn: 60 * 15,
         },
       ),
       this.jwtService.signAsync(

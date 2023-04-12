@@ -53,7 +53,7 @@ Cafe Managment System - System zarządzania kawiarnią.
 - TypeScript
 - MySQL
 - TypeORM
-- Axios
+- Ejs
 
 
 ## Features

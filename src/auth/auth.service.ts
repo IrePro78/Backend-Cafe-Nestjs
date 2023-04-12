@@ -57,7 +57,7 @@ export class AuthService {
         { userId, email, role },
         {
           secret: 'guards-secret',
-          expiresIn: 15,
+          expiresIn: 25,
         },
       ),
       this.jwtService.signAsync(
@@ -102,6 +102,7 @@ export class AuthService {
 
     const tokens = await this.getTokens(user.userId, user.email, user.role);
     await this.updateRtHash(user.userId, tokens.refresh_token);
+    console.log(tokens);
     return tokens;
   }
 }

@@ -26,48 +26,114 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+# Project Name
+Cafe Managment System - System zarządzania kawiarnią.
+> Live demo [_here_](https://www.example.com). <!-- If you have the project hosted somewhere, include the link here. -->
 
-```bash
-$ npm install
-```
+## Table of Contents
+* [General Info](#general-information)
+* [Technologies Used](#technologies-and-packages-used)
+* [Features](#features)
+* [Screenshots](#screenshots)
+* [Setup](#setup)
+* [Usage](#usage)
+* [Project Status](#project-status)
+* [Room for Improvement](#room-for-improvement)
+* [Acknowledgements](#acknowledgements)
+* [Contact](#contact)
+<!-- * [License](#license) -->
 
-## Running the app
 
-```bash
-# development
-$ npm run start
+## General Information
+- Cafe Management System is based on a concept to maintain orders and management of a particular items. This project is developed Java Script using NestJS framework, Type Script and MySQL database used. The role of the User is to maintain information including operations like modifying, deleting, updating the items records and customer order records in the system.
 
-# watch mode
-$ npm run start:dev
 
-# production mode
-$ npm run start:prod
-```
+## Technologies and packages used
+- Nestjs
+- TypeScript
+- MySQL
+- TypeORM
+- Axios
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+## Features
+List the ready features here:
+- Register User
+- Login User
+- Logout User
+- Get Users
+- Refresh Token JWT
+- Create Category
+- Update Category
+- Get Categories
+- Create Product
+- Update Product
+- Remove Product
+- Generate Report
+- Get Report PDF
+- Get Bills
+- Remove Bill
+- Get Dashboard Details
 
-# e2e tests
-$ npm run test:e2e
+## Screenshots
+...
+<!-- If you have screenshots you'd like to share, include them here. -->
 
-# test coverage
-$ npm run test:cov
-```
 
-## Support
+## Setup
+Dependencies : ![package.json](./package.json)
+Environment: ![.env-example](./.env-example)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Usage
+Endpoints:
 
-## License
+Auth:
+- http://localhost:3000/auth/register
+- http://localhost:3000/auth/login
+- http://localhost:3000/auth/logout
+- http://localhost:3000/auth/refresh
 
-Nest is [MIT licensed](LICENSE).
+User:
+- http://localhost:3000/user/getUsers
+
+Category:
+- http://localhost:3000/category/add
+- http://localhost:3000/category/get
+- http://localhost:3000/category/update
+
+Product:
+- http://localhost:3000/product/add
+- http://localhost:3000/product/update
+- http://localhost:3000/product/get
+- http://localhost:3000/product/delete
+
+Bill:
+- http://localhost:3000/bill/generateReport
+- http://localhost:3000/bill/getPdf
+- http://localhost:3000/bill/getBills
+- http://localhost:3000/bill/delete/:id
+
+Dashboard:
+- http://localhost:3000/dashboard/details
+
+
+## Project Status
+Project is: _in progress_ 
+
+
+## Room for Improvement
+Room for improvement:
+- Fix error handling
+
+To do:
+- Adding a payment method
+
+
+## Acknowledgements
+- Many thanks to...
+
+
+## Contact
+Created by [@IrePro78](gos3r78@gmail.com) - feel free to contact me!
